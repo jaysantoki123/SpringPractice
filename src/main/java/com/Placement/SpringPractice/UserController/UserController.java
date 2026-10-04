@@ -30,7 +30,7 @@ public class UserController{
     }
     
     @GetMapping("/search-user/{id}")
-    public Optional<UserResponse> searchUserById(@PathVariable Long id){
+    public UserResponse searchUserById(@PathVariable Long id){
         return service.getById(id);
     }
 
@@ -46,12 +46,12 @@ public class UserController{
     }
 
     @GetMapping("/searchByEmail/{email}")
-    public Optional<UserResponse> searchByEmail(@PathVariable String email){
+    public UserResponse searchByEmail(@PathVariable String email){
         return service.searchEmail(email);
     }
 
     @GetMapping("/searchByName/{name}")
-    public Optional<UserResponse> searchByName(@PathVariable String name){
+    public UserResponse searchByName(@PathVariable String name){
         return service.searchByName(name);
     }
 

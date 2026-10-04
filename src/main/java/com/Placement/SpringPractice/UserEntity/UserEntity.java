@@ -1,12 +1,14 @@
 package com.Placement.SpringPractice.UserEntity;
 
+import com.Placement.SpringPractice.AddressEntity.AddressEntity;
+import com.Placement.SpringPractice.OrderEntity.OrderEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-
 import java.time.LocalDateTime;
 import java.util.List;
+
 
 @Entity
 @Table(name = "Users")
@@ -47,6 +49,29 @@ public class UserEntity {
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public AddressEntity getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressEntity address) {
+        this.address = address;
+    }
+
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
+    private AddressEntity address;
+
+    public List<OrderEntity> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderEntity> orders) {
+        this.orders = orders;
+    }
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.REMOVE)
+    private List<OrderEntity> orders;
+
 
 
     @PrePersist

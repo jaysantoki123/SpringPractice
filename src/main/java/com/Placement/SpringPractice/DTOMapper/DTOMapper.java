@@ -44,10 +44,14 @@ package com.Placement.SpringPractice.DTOMapper;//package com.Placement.SpringPra
 //}
 
 
-import com.Placement.SpringPractice.DTOs.UserRequest;
-import com.Placement.SpringPractice.DTOs.UserResponse;
+import com.Placement.SpringPractice.AddressEntity.AddressEntity;
+import com.Placement.SpringPractice.DTOs.*;
+import com.Placement.SpringPractice.OrderEntity.OrderEntity;
 import com.Placement.SpringPractice.UserEntity.UserEntity;
 import org.springframework.stereotype.Component;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class DTOMapper {
@@ -64,18 +68,25 @@ public class DTOMapper {
         return user;
     }
 
-    public  UserResponse toDTO(UserEntity entity){
+    public UserResponse toDTO(UserEntity entity) {
+
+        AddressResponse addressResponse = null;
+        if (entity.getAddress() != null) {
+            addressResponse = toAddressResponseDto(entity.getAddress());
+        }
+
         return new UserResponse(
                 entity.getName(),
                 entity.getEmail(),
                 entity.getPhone_no(),
                 entity.getAge(),
                 entity.getGender(),
-                entity.getHobbies()
+                entity.getHobbies(),
+                addressResponse
         );
     }
 
-    public UserEntity updateDTO(UserRequest request, UserEntity entity){
+    public UserEntity updateDTO(UserRequest request, UserEntity entity) {
         entity.setName(request.name());
         entity.setAge(request.age());
         entity.setEmail(request.email());
@@ -88,5 +99,57 @@ public class DTOMapper {
 
     }
 
+    public AddressEntity toAddressEntity(AddressRequest addressRequest) {
+        AddressEntity address = new AddressEntity();
+        address.setStreet(addressRequest.street());
+        address.setCity(addressRequest.city());
+        address.setState(addressRequest.state());
+        address.setCountry(addressRequest.country());
+        address.setPincode(addressRequest.pincode());
 
+        return address;
+    }
+
+    public AddressResponse toAddressResponseDto(AddressEntity entity) {
+        return new AddressResponse(
+                entity.getId(),
+                entity.getStreet(),
+                entity.getCity(),
+                entity.getState(),
+                entity.getCountry(),
+                entity.getPincode()
+        );
+    }
+
+    public AddressEntity updateAddress(AddressRequest request, AddressEntity entity) {
+        entity.setStreet(request.street());
+        entity.setCity(request.city());
+        entity.setState(request.state());
+        entity.setCountry(request.country());
+        entity.setPincode(request.pincode());
+
+        return entity;
+    }
+
+    public OrderEntity toOrderEntity(OrderRequest request) {
+        OrderEntity order = new OrderEntity();
+        order.setProductName(request.productName());
+        order.setQuantity(request.quantity());
+        order.setPrice(request.price());
+
+        return order;
+    }
+
+    public OrderResponse toOrderResponseDTO(OrderEntity entity) {
+        return new OrderResponse(
+                entity.getId(),
+                entity.getUser().getId(),
+                entity.getProductName(),
+                entity.getPrice(),
+                entity.getQuantity(),
+                entity.getTotalAmount(),
+                entity.getOrderStatus(),
+                entity.getOrderDate()
+        );
+    }
 }

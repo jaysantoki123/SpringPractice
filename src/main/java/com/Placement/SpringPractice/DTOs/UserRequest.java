@@ -32,5 +32,8 @@ public record UserRequest(
         @NotBlank(message = "Phone number is required")
         @Size(min = 10, max = 10, message = "Phone number must be exactly 10 digits long")
         @Pattern(regexp = "^[0-9]*$", message = "Phone number must contain only numbers")
-        String phone_no
+        String phone_no,
+
+        AddressRequest addressRequest
+
 ){}

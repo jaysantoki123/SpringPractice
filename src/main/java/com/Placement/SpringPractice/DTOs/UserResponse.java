@@ -1,6 +1,7 @@
 package com.Placement.SpringPractice.DTOs;
 
 import java.util.List;
+import java.util.Set;
 
 public record UserResponse(
     String name,
@@ -8,6 +9,8 @@ public record UserResponse(
     String phone_no,
     Integer age,
     String gender,
-    List<String> hobbies
+    List<String> hobbies,
+    AddressResponse addressResponse
+
 ) {
 }
